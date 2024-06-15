@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 import { Application } from '@splinetool/runtime';
 import axios from 'axios';
 
@@ -50,14 +50,62 @@ export default {
   }
 }
 
+</script> -->
+
+<script setup>
+import.meta.env.VITE_WEATHER_API_KEY
+
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+import { Application } from '@splinetool/runtime';
+
+// Создаем реактивные переменные
+const city = ref('');
+const error = ref('');
+const info = ref(null);
+
+// Компьютед свойства для динамических данных
+const cityName = computed(() => "'" + city.value + "'");
+const showTemp = computed(() => (info.value && info.value.main ? "Температура: " + info.value.main.temp : ""));
+const showFeelsLike = computed(() => (info.value && info.value.main ? "Ощущается как: " + info.value.main.feels_like : ""));
+const showMinTemp = computed(() => (info.value && info.value.main ? "Минимальная температура: " + info.value.main.temp_min : ""));
+const showMaxTemp = computed(() => (info.value && info.value.main ? "Максимальная температура: " + info.value.main.temp_max : ""));
+
+// Функция для получения погоды
+const getWeather = () => {
+  if (city.value.trim().length < 2) {
+    error.value = "Введите корректное название :)";
+    return false;
+  }
+  error.value = '';
+  axios
+    // .get(`https://api.openweathermap.org/data/2.5/weather?q=${city.value}&units=metric&appid=6df6e90d294f8b95dd87547766058540`)
+    .get(`https://api.openweathermap.org/data/2.5/weather?q=${city.value}&units=metric&appid=${import.meta.env.VITE_WEATHER_API_KEY}`)
+    .then(res => {
+      info.value = res.data;
+    });
+};
+
+// Функция для очистки введенного города
+const clearCity = () => {
+  city.value = '';
+};
+
+// Функция, которая выполняется при монтировании компонента
+onMounted(() => {
+  const canvas = document.getElementById('canvas3d');
+  const app = new Application(canvas);
+  app.load('https://prod.spline.design/Nl0B5K-ks5Oazd33/scene.splinecode');
+});
 </script>
+
 
 <template>
 <div class="wrapper">
   <h1>Погодное приложение</h1>
   <p>Узнать погоду в  {{ city == "" ?  "вашем городе" : cityName }} </p>
   <div class="input-wrapper">
-    <input type="text" v-model="city" placeholder="введите ваш город">
+    <input id="city" type="text" v-model="city" placeholder="введите ваш город">
     <svg v-if="city" @click="clearCity" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="clear-icon size-6">
       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.5 0 0 0 2.25 15Z" />
     </svg>
