@@ -153,6 +153,35 @@ export default {
 }
 .wrapper button:hover {
   transform: scale(1.1) translateY(-5px);
+
+  /* Медиа-запросы для адаптации под мобильные устройства */
+@media (max-width: 600px) {
+  .wrapper {
+    width: 60%;
+    padding: 10px;
+    /* border-radius: 20px; */
+  }
+  .logo-container {
+    width: 60px;  /* Подберите нужный размер */
+    height: 60px; /* Подберите нужный размер */
+  }
+  .wrapper h1 {
+    font-size: 1.5em;
+  }
+  .wrapper p {
+    font-size: 1em;
+    margin-top: 20px;
+  }
+  .wrapper input {
+    font-size: 1em;
+    padding: 5px;
+    width: 100%;
+  }
+  .wrapper button {
+    width: 100%;
+    margin: 10px 0;
+  }
+}
 }
 
 </style>
