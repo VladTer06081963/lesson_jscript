@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@splinetool/runtime": "^1.6.8",
     "axios": "^1.7.2",
     "vue": "^3.4.21"
   },
