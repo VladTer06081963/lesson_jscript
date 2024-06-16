@@ -145,8 +145,8 @@ onMounted(() => {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 100px;  /* Подберите нужный размер */
-  height: 100px; /* Подберите нужный размер */
+  width: 250px;  /* Подберите нужный размер */
+  height: 250px; /* Подберите нужный размер */
 }
 #canvas3d {
   width: 100%;
@@ -171,6 +171,10 @@ onMounted(() => {
   font-size: 14px;
   padding: 5px 8px;
   outline: none;
+}
+#city {
+  position: relative;
+  display: inline-block;
 }
 .wrapper input:focus {
   border-bottom-color: #6e2d7d;
